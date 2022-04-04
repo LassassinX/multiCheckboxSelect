@@ -8,9 +8,48 @@ Put the multiCheckboxSelect.js and multi-checkbox-select.css files in your proje
 
 ## Usage
 
+### Initialization
+
+JS
+
+```javascript
+multiCheckboxSelect('#selectTag')
+```
+
+or
+
+```javascript
+var options = { 
+      placeholder: 'Select States',
+      entryName: 'State',
+      data: ['option1', 'option2'],
+}
+
+multiCheckboxSelect('#selectTagMultiple', options)
+```
+
+For jQuery
+
+```javascript
+$('#selectTag').multiCheckboxSelect()
+```
+
+or
+
+```javascript
+var options = { 
+      placeholder: 'Select States',
+      entryName: 'State',
+      data: ['option1', 'option2'],
+}
+
+$('#selectTag').multiCheckboxSelect(options)
+```
+
 You can call the function `multiCheckboxSelect(selectElement/selector, options)` or for jQuery `$(selectTag).multiCheckboxSelect(options)`. If the select tag has `multiple` attribute or the `multiple: true` option, it will act as a multi checkbox select.
 
 HTML
+
 ```HTML
 <select id="selectTagMultiple" multiple>
             <option value="volvo">Volvo</option>
@@ -26,32 +65,6 @@ HTML
             <option value="audi">Audi</option>
  </select>
 ```
-
-JS
-```javascript
-multiCheckboxSelect('#selectTag')
-
-var options = { 
-      placeholder: 'Select States',
-      entryName: 'State',
-      data: ['option1', 'option2'],
-}
-
-multiCheckboxSelect('#selectTagMultiple', options)
-```
-jQuery
-```javascript
-$('#selectTag').multiCheckboxSelect()
-
-var options = { 
-      placeholder: 'Select States',
-      entryName: 'State',
-      data: ['option1', 'option2'],
-}
-
-$('#selectTag').multiCheckboxSelect(options)
-```
-
 
 ## Options
 - `placeholder: 'Select country'` - Placeholder of the input field
