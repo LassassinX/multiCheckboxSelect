@@ -1,0 +1,151 @@
+/* @@Author: Sanjid Islam Chowdhury
+MultiCheckboxSelect css@v1.0.0 */
+
+/* button  */
+.dropdown-wrapper div button {
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: 2px solid #46D2C4;
+    border-radius: 2px;
+    justify-self: center;
+    align-self: center;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.dropdown-wrapper div button:hover {
+    cursor: pointer;
+}
+
+.dropdown-wrapper div button svg {
+    opacity: 0;
+    position: absolute;
+    top: -3px;
+    left: 3px;
+    border-right: none !important;
+    transform: scale(1.2);
+    z-index: 2;
+    transition: all 0.2s;
+}
+
+.dropdown-wrapper div button[checked="true"]::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 40%;
+    height: 70%;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    z-index: 1;
+    right: -2px;
+    transition: all 0.2s;
+}
+
+.dropdown-wrapper div button[checked="true"] svg {
+    opacity: 1;
+}
+
+/* BUTTON END  */
+
+.multi-checkbox-select-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.multi-checkbox-select-wrapper .input-wrapper {
+    padding: 10px 12px;
+    border: solid 2px #CCCFD2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.multi-checkbox-select-wrapper .input-wrapper input {
+    all: initial;
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.multi-checkbox-select-wrapper .input-wrapper svg {
+    transform-origin: center;
+    transition: all 0.2s ease-in-out;
+    padding: 7px;
+    margin-right: -7px;
+    height: 20px;
+    width: 30px;
+    cursor: pointer;
+    fill: #CCCFD2;
+}
+
+.multi-checkbox-select-wrapper .dropdown-wrapper {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: solid 2px #CCCFD2;
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 10px 10px;
+    height: 0px;
+    opacity: 0;
+    transition: all 0.2s;
+    z-index: 9999;
+}
+
+.multi-checkbox-select-wrapper .dropdown {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.multi-checkbox-select-wrapper .dropdown>div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    transition: all 0.2s;
+}
+
+.multi-checkbox-select-wrapper .dropdown>div:hover { 
+    cursor: pointer;
+    background-color: #00ffe517;
+    border-radius: 5px;
+}
+
+.multi-checkbox-select-wrapper .dropdown:not([data-multiple])>div:hover {
+    background-color: #46d2c4;
+    color: white;
+}
+
+
+/* .multi-checkbox-select-wrapper .dropdown>div:first-child {
+    padding-top: 0;
+}
+
+.multi-checkbox-select-wrapper .dropdown>div:last-child {
+    padding-bottom: 0;
+} */
+
+
+.multi-checkbox-select-wrapper .dropdown>* p {
+    font-size: 14px;
+}
+
+.multi-checkbox-select-wrapper .dropdown>p.no-result {
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    padding: 0;
+}
+
+.select-all {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20px;
+}
+
+.select-all p {
+    font-size: 15px;
+}
