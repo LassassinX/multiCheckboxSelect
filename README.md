@@ -84,7 +84,7 @@ options ={
 ## Options
 - `placeholder: 'Select country'` - Placeholder of the input field
 
-- `data: ['data1', 'data2', {value: '4', text: 'data3'}]` - Append additional data-options to the select tag. You can pass an object with value and text which will reflect in the select tag's value and innerHTML
+- `data: ['data1', 'data2', {value: '3', text: 'data3'}]` - Append additional data-options to the select tag. You can pass an object with value and text which will reflect in the select tag's value and innerHTML.
 
 - `multiple: true || false` - State whether it will be a multi checkbox select or a normal dropdown
 
