@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v1.0.0
+// MultiCheckboxSelect js@v1.0.2
 
 try {
     jQuery.fn.extend({
@@ -94,6 +94,7 @@ function multiCheckboxSelect(element, properties) {
                 let entries = Array.from(self.options).map(x => Object
                     .assign({}, {
                         value: x.value,
+                        text: x.text,
                         checked: x.getAttribute('selected') === ''
                     }))
                 self.multiCheckboxSelectObj.insertItems(entries)
@@ -101,14 +102,14 @@ function multiCheckboxSelect(element, properties) {
 
             insertItems: function (values) {
                 dropdown.innerHTML = ""
-                values.sort((a, b) => a.value.localeCompare(b.value))
+                values.sort((a, b) => a.text.localeCompare(b.text))
                 Object.entries(values).forEach(([ind, opt]) => {
                     //basic template
                     let wrapper = document.createElement('div')
                     wrapper.setAttribute('data-value', opt.value)
 
                     let p = document.createElement('p')
-                    p.textContent = opt.value
+                    p.textContent = opt.text
 
                     if (self.multiCheckboxSelectObj.props.multiple) {
                         let button = document.createElement('button')
@@ -127,7 +128,7 @@ function multiCheckboxSelect(element, properties) {
                         wrapper.appendChild(p)
                         wrapper.appendChild(button)
 
-                        wrapper.addEventListener('click', (e)=>{
+                        wrapper.addEventListener('click', (e) => {
                             if (e.currentTarget === e.target)
                                 button.click()
                         })
@@ -139,17 +140,18 @@ function multiCheckboxSelect(element, properties) {
                                     </svg>`
 
                         button.innerHTML = icon
-                        
+
                     }
 
                     if (!self.multiCheckboxSelectObj.props.multiple) {
                         wrapper.appendChild(p)
-                        wrapper.addEventListener('click', ()=>{
+                        
+                        wrapper.addEventListener('click', () => {
                             self.value = opt.value
-                            inputField.value = opt.value
+                            inputField.value = opt.text
                             self.multiCheckboxSelectObj.closeDropdown()
                         })
-                    }
+                    } 
 
                     //add to visible dropdown
                     dropdown.appendChild(wrapper)
@@ -165,10 +167,10 @@ function multiCheckboxSelect(element, properties) {
 
             search: function (input) {
                 let value = input.value.toLowerCase()
-                let searchedEntries = Array.from(self.options).filter(x => x
-                    .value.toLowerCase().includes(value))
+                let searchedEntries = Array.from(self.options).filter(x => x.innerHTML.toLowerCase().includes(value))
                 searchedEntries = searchedEntries.map(x => Object.assign({}, {
                     value: x.value,
+                    text: x.text,
                     checked: x.getAttribute('selected') === ''
                 }))
 
@@ -193,8 +195,6 @@ function multiCheckboxSelect(element, properties) {
                 } else {
                     inputField.placeholder = self.multiCheckboxSelectObj.props.placeholder
                 }
-
-                console.log(inputField)
 
             },
 
@@ -289,21 +289,42 @@ function multiCheckboxSelect(element, properties) {
 
         wrapper.insertBefore(dropdownWrapper, self)
 
+        //convert all data entries to options.value and options.text
+        for (let i = 0; i < thisProps.data.length; i++) {
+            let e = thisProps.data[i]
+
+            if (!(e instanceof Object)) {
+                e = Object.assign({},{
+                    value: e,
+                    text: e
+                })
+
+                thisProps.data[i] = e
+            }
+        }
+
         //generate values through the options. If options are in html, options are appended
+
         //add elements to actual select tag
         Object.entries(thisProps.data).forEach(([key, value]) => {
             var opt = document.createElement('option');
-            opt.value = value;
-            opt.innerHTML = value;
+            opt.value = value.value;
+            opt.innerHTML = value.text;
             self.appendChild(opt);
         })
+        
+        console.log(Object.assign({}, thisProps.data))
 
         //append options to props
         for (let i = 0; i < self.length; i++) {
-            if (!Object.values(thisProps.data).includes(self[i].value)) {
-                thisProps.data.unshift(self[i].value)
-            }
+            if (thisProps.data.find(x => x.value === self[i].value && x.text === self[i].innerHTML) === undefined) {
+                thisProps.data.push({
+                    value: self[i].value,
+                    text: self[i].innerHTML
+                })
+            } 
         }
+
 
         //for multiple
         if (thisProps.multiple) {
