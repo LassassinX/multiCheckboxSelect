@@ -46,9 +46,24 @@ var options = {
 $('#selectTag').multiCheckboxSelect(options)
 ```
 
-You can call the function `multiCheckboxSelect(selectElement/selector, options)` or for jQuery `$(selectTag).multiCheckboxSelect(options)`. If the select tag has `multiple` attribute or the `multiple: true` option, it will act as a multi checkbox select.
+If the select tag has `multiple` attribute or the `multiple: true` option, it will act as a multi checkbox select.
 
-HTML
+If we want custom value for each select dropdown item, then
+```javascript
+options ={
+      ...,
+      data: [{value: '1', text:'myText'}]
+}
+```
+You can also combine data whose value and innerHTML defaults to the string provided and different value with different innerHTML
+```javascript
+options ={
+      ...,
+      data: [{value: '1', text:'myText'}, 'option2']
+}
+```
+
+###HTML
 
 ```HTML
 <select id="selectTagMultiple" multiple>
@@ -69,7 +84,7 @@ HTML
 ## Options
 - `placeholder: 'Select country'` - Placeholder of the input field
 
-- `data: ['data1', 'data2']` - Append additional data-options to the select tag
+- `data: ['data1', 'data2', {value: '4', text: 'data3'}]` - Append additional data-options to the select tag. You can pass an object with value and text which will reflect in the select tag's value and innerHTML
 
 - `multiple: true || false` - State whether it will be a multi checkbox select or a normal dropdown
 
