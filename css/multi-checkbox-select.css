@@ -1,5 +1,5 @@
 /* @@Author: Sanjid Islam Chowdhury
-MultiCheckboxSelect css@v1.0.0 */
+MultiCheckboxSelect css@v1.0.2 */
 
 /* button  */
 .dropdown-wrapper div button {
@@ -68,12 +68,14 @@ MultiCheckboxSelect css@v1.0.0 */
     all: initial;
     font-size: 14px;
     flex-grow: 1;
+    width: 100%;
 }
 
 .multi-checkbox-select-wrapper .input-wrapper svg {
     transform-origin: center;
     transition: all 0.2s ease-in-out;
     padding: 7px;
+    flex-shrink: 0;
     margin-right: -7px;
     height: 20px;
     width: 30px;
@@ -83,7 +85,7 @@ MultiCheckboxSelect css@v1.0.0 */
 
 .multi-checkbox-select-wrapper .dropdown-wrapper {
     position: absolute;
-    width: 100%;
+    min-width: 100%;
     background: white;
     border: solid 2px #CCCFD2;
     border-radius: 10px;
@@ -92,13 +94,13 @@ MultiCheckboxSelect css@v1.0.0 */
     height: 0px;
     opacity: 0;
     transition: all 0.2s;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .multi-checkbox-select-wrapper .dropdown {
     max-height: 300px;
     overflow-y: auto;
-    padding-right: 10px;
+    overflow-x: hidden;
 }
 
 .multi-checkbox-select-wrapper .dropdown>div {
@@ -106,6 +108,7 @@ MultiCheckboxSelect css@v1.0.0 */
     justify-content: space-between;
     padding: 10px;
     transition: all 0.2s;
+    gap: 20px;
 }
 
 .multi-checkbox-select-wrapper .dropdown>div:hover { 
@@ -143,7 +146,7 @@ MultiCheckboxSelect css@v1.0.0 */
 .select-all {
     display: flex;
     justify-content: space-between;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 
 .select-all p {
