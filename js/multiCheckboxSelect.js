@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v1.0.2.1
+// MultiCheckboxSelect js@v1.0.2.2
 
 try {
     jQuery.fn.extend({
@@ -81,7 +81,14 @@ function multiCheckboxSelect(element, properties) {
                         dropdownWrapper.classList.add('hidden')
                         self.multiCheckboxSelectObj.isOpen = false
                     }, 1);
+
+                    self.multiCheckboxSelectObj.fireChange()
                 }
+            },
+
+            fireChange: function () {
+                var event = new Event('change');
+                self.dispatchEvent(event);
             },
 
             closeAble: function () {
@@ -146,13 +153,13 @@ function multiCheckboxSelect(element, properties) {
 
                     if (!self.multiCheckboxSelectObj.props.multiple) {
                         wrapper.appendChild(p)
-                        
+
                         wrapper.addEventListener('click', () => {
                             self.value = opt.value
                             inputField.value = opt.text
                             self.multiCheckboxSelectObj.closeDropdown()
                         })
-                    } 
+                    }
 
                     //add to visible dropdown
                     dropdown.appendChild(wrapper)
@@ -295,7 +302,7 @@ function multiCheckboxSelect(element, properties) {
             let e = thisProps.data[i]
 
             if (!(e instanceof Object)) {
-                e = Object.assign({},{
+                e = Object.assign({}, {
                     value: e,
                     text: e
                 })
@@ -313,7 +320,7 @@ function multiCheckboxSelect(element, properties) {
             opt.innerHTML = value.text;
             self.appendChild(opt);
         })
-        
+
         console.log(Object.assign({}, thisProps.data))
 
         //append options to props
@@ -323,7 +330,7 @@ function multiCheckboxSelect(element, properties) {
                     value: self[i].value,
                     text: self[i].innerHTML
                 })
-            } 
+            }
         }
 
 
