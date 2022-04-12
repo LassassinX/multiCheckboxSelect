@@ -81,6 +81,12 @@ options ={
  </select>
 ```
 
+## Methods
+
+- `initializeData(data)  //data should be an array, data = []` - Removes all current data from the multiselect object and initializes with the passed dataset.
+
+- `appendData(data)  //data should be an array, data = []` - Appends data to the current multiselect object. 
+
 ## Options
 - `placeholder: 'Select country'` - Placeholder of the input field
 
