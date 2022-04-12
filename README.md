@@ -83,9 +83,11 @@ options ={
 
 ## Methods
 
-- `initializeData(data)  //data should be an array, data = []` - Removes all current data from the multiselect object and initializes with the passed dataset.
+|Returns|Method|Parameter|Description| 
+|--------|-------------|----------|---------------------------------------------------------------------------------------------|
+| void|appendData(data)|Array|Appends data to the current multi checkbox select instance.|
+| void|initializeData(data)|Array| Removes all current data from the multiselect object and initializes with the passed dataset.|
 
-- `appendData(data)  //data should be an array, data = []` - Appends data to the current multiselect object. 
 
 ## Options
 - `placeholder: 'Select country'` - Placeholder of the input field
