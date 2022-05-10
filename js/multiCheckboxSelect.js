@@ -441,7 +441,3 @@ function multiCheckboxSelect(element, properties) {
         throw "Multi Checkbox Select already initialized once"
     }
 }
-
-function initializeData(element, data) {
-
-}
