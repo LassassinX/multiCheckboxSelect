@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v1.1.0
+// MultiCheckboxSelect js@v1.1.1
 
 try {
     jQuery.fn.extend({
@@ -170,20 +170,17 @@ function multiCheckboxSelect(element, properties) {
                         button.setAttribute('data-value', opt.value)
                         button.setAttribute('type', "button")
                         button.addEventListener('click', () => {
-                            button.setAttribute('checked', !(button
-                                .getAttribute('checked') ===
-                                'true'))
+                            button.setAttribute('checked', !(button.getAttribute('checked') ==='true'))
                         })
 
-                        button.addEventListener('click', self
-                            .multiCheckboxSelectObj.check.bind(null,
-                                button))
+                        button.addEventListener('click', self.multiCheckboxSelectObj.check.bind(null,button))
 
                         wrapper.appendChild(p)
                         wrapper.appendChild(button)
 
                         wrapper.addEventListener('click', (e) => {
-                            if (e.currentTarget === e.target)
+                            
+                            if (e.currentTarget === e.target || e.target === p)
                                 button.click()
                         })
 
@@ -254,6 +251,7 @@ function multiCheckboxSelect(element, properties) {
 
             selectAll: function (thisButton) {
                 inputField.value = ""
+                
                 let boolean = thisButton.getAttribute('checked') === 'true'
 
                 Array.from(self.options).forEach(e => {
