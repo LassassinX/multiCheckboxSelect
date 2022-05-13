@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v1.1.1
+// MultiCheckboxSelect js@v1.1.2
 
 try {
     jQuery.fn.extend({
@@ -88,6 +88,7 @@ function multiCheckboxSelect(element, properties) {
             isMouseInsideDropdown: false,
             isOpen: false,
             checkedItems: 0,
+            selectAll: null,
 
             openDropdown: function (event) {
                 if (!self.multiCheckboxSelectObj.isOpen) {
@@ -212,7 +213,14 @@ function multiCheckboxSelect(element, properties) {
                     let p = document.createElement('p')
                     p.classList.add('no-result')
                     p.textContent = "No Results Found"
+                    if (self.multiCheckboxSelectObj.props.selectAll !== null) {
+                        self.multiCheckboxSelectObj.props.selectAll.style.display = "none"
+                    }
                     dropdown.appendChild(p)
+                } else {
+                    if (self.multiCheckboxSelectObj.props.selectAll !== null) {
+                        self.multiCheckboxSelectObj.props.selectAll.removeAttribute('style')
+                    }
                 }
             },
 
@@ -389,6 +397,7 @@ function multiCheckboxSelect(element, properties) {
             //generate select all
             let selectAll = document.createElement('div')
             selectAll.classList.add('select-all')
+            thisProps.selectAll = selectAll
             let p = document.createElement('p')
             p.textContent = 'Select All'
 
