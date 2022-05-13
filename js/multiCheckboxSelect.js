@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v1.1.3
+// MultiCheckboxSelect js@v1.1.4
 
 try {
     jQuery.fn.extend({
@@ -32,6 +32,14 @@ try {
 
             return this.each(() => {
                 self.appendData(data)
+            })
+        },
+
+        addChild: function (child) {
+            let self = this[0]
+
+            return this.each(() => {
+                self.addChild(child)
             })
         }
     })
@@ -80,6 +88,22 @@ function multiCheckboxSelect(element, properties) {
             self.multiCheckboxSelectObj.initializeItems(data)
         }
 
+        self.addChild = (child) => {
+            if (!(child instanceof Object)){
+                child = document.querySelector(child)
+            }
+
+            if (child instanceof jQuery){
+                child = child[0]
+            }
+
+            if (child.multiCheckboxSelectObj) {
+                self.multiCheckboxSelectObj.children.push(child) //select tag
+            } else {
+                throw "Child is not an instance of multiCheckboxSelect"
+            }
+        }
+
         self.multiCheckboxSelectObj = {
             props: this.properties,
             isMouseInsideInput: false,
@@ -87,6 +111,7 @@ function multiCheckboxSelect(element, properties) {
             isOpen: false,
             checkedItems: 0,
             selectAllBlock: null,
+            children: [],
 
             openDropdown: function (event) {
                 if (!self.multiCheckboxSelectObj.isOpen) {
@@ -291,7 +316,12 @@ function multiCheckboxSelect(element, properties) {
                 if (self.multiCheckboxSelectObj.checkedItems !== 0) {
                     self.multiCheckboxSelectObj.clearSelection()
                 } else {
-                    self.onClear()
+                    self.dispatchEvent(new Event('clear'))
+                    self.dispatchEvent(new Event('change'))
+
+                    self.multiCheckboxSelectObj.children.forEach(e =>{
+                        e.multiCheckboxSelectObj.clearSelection()
+                    })
                 }
 
             },
@@ -368,7 +398,6 @@ function multiCheckboxSelect(element, properties) {
 
         }
 
-        self.onClear = function () { }
 
         let thisProps = self.multiCheckboxSelectObj.props
 
