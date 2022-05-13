@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v1.1.2
+// MultiCheckboxSelect js@v1.1.3
 
 try {
     jQuery.fn.extend({
@@ -13,7 +13,7 @@ try {
 
             })
 
-        }, 
+        },
 
         initializeData: function (data) {
 
@@ -27,10 +27,10 @@ try {
 
         },
 
-        appendData: function(data){
+        appendData: function (data) {
             let self = this[0]
 
-            return this.each(()=> { 
+            return this.each(() => {
                 self.appendData(data)
             })
         }
@@ -72,7 +72,6 @@ function multiCheckboxSelect(element, properties) {
         self.initializeData = (data) => {
             for (i = self.options.length - 1; i >= 0; i--) {
                 self.remove(i);
-
             }
             self.multiCheckboxSelectObj.initializeItems(data)
         }
@@ -83,12 +82,11 @@ function multiCheckboxSelect(element, properties) {
 
         self.multiCheckboxSelectObj = {
             props: this.properties,
-
             isMouseInsideInput: false,
             isMouseInsideDropdown: false,
             isOpen: false,
             checkedItems: 0,
-            selectAll: null,
+            selectAllBlock: null,
 
             openDropdown: function (event) {
                 if (!self.multiCheckboxSelectObj.isOpen) {
@@ -96,7 +94,7 @@ function multiCheckboxSelect(element, properties) {
                     setTimeout(() => {
                         dropdownWrapper.style.height = 'auto'
                         dropdownWrapper.style.opacity = '1'
-                        inputWrapper.getElementsByTagName('svg').item(0)
+                        inputWrapper.getElementsByTagName('svg').item(1)
                             .style.transform = 'rotate(180deg)'
                         self.multiCheckboxSelectObj.isOpen = true
 
@@ -109,7 +107,7 @@ function multiCheckboxSelect(element, properties) {
                 if (self.multiCheckboxSelectObj.isOpen) {
                     dropdownWrapper.style.height = '0'
                     dropdownWrapper.style.opacity = '0'
-                    inputWrapper.getElementsByTagName('svg').item(0).style
+                    inputWrapper.getElementsByTagName('svg').item(1).style
                         .transform = 'rotate(0deg)'
 
                     setTimeout(() => {
@@ -171,16 +169,16 @@ function multiCheckboxSelect(element, properties) {
                         button.setAttribute('data-value', opt.value)
                         button.setAttribute('type', "button")
                         button.addEventListener('click', () => {
-                            button.setAttribute('checked', !(button.getAttribute('checked') ==='true'))
+                            button.setAttribute('checked', !(button.getAttribute('checked') === 'true'))
                         })
 
-                        button.addEventListener('click', self.multiCheckboxSelectObj.check.bind(null,button))
+                        button.addEventListener('click', self.multiCheckboxSelectObj.check.bind(null, button))
 
                         wrapper.appendChild(p)
                         wrapper.appendChild(button)
 
                         wrapper.addEventListener('click', (e) => {
-                            
+
                             if (e.currentTarget === e.target || e.target === p)
                                 button.click()
                         })
@@ -213,13 +211,13 @@ function multiCheckboxSelect(element, properties) {
                     let p = document.createElement('p')
                     p.classList.add('no-result')
                     p.textContent = "No Results Found"
-                    if (self.multiCheckboxSelectObj.props.selectAll !== null) {
-                        self.multiCheckboxSelectObj.props.selectAll.style.display = "none"
+                    if (self.multiCheckboxSelectObj.selectAllBlock !== null) {
+                        self.multiCheckboxSelectObj.selectAllBlock.style.display = "none"
                     }
                     dropdown.appendChild(p)
                 } else {
-                    if (self.multiCheckboxSelectObj.props.selectAll !== null) {
-                        self.multiCheckboxSelectObj.props.selectAll.removeAttribute('style')
+                    if (self.multiCheckboxSelectObj.selectAllBlock !== null) {
+                        self.multiCheckboxSelectObj.selectAllBlock.removeAttribute('style')
                     }
                 }
             },
@@ -249,17 +247,58 @@ function multiCheckboxSelect(element, properties) {
                 }
 
                 if (self.multiCheckboxSelectObj.checkedItems > 0) {
-                    inputField.placeholder =
-                        `Selected ${self.multiCheckboxSelectObj.checkedItems} ${self.multiCheckboxSelectObj.props.entryName}(s)`
+                    inputField.placeholder = `Selected ${self.multiCheckboxSelectObj.checkedItems} ${self.multiCheckboxSelectObj.props.entryName}(s)`
+                    self.multiCheckboxSelectObj.showClearButton()
                 } else {
                     inputField.placeholder = self.multiCheckboxSelectObj.props.placeholder
+                    self.multiCheckboxSelectObj.hideClearButton()
+                }
+
+            },
+
+            showClearButton: function () {
+                if (self.multiCheckboxSelectObj.props.multiple) {
+                    inputWrapper.getElementsByTagName('svg').item(0)
+                        .style.display = 'block'
+
+                    inputWrapper.getElementsByTagName('svg').item(0)
+                        .style.opacity = 0
+
+                    inputWrapper.getElementsByTagName('svg').item(0)
+                        .style.transform = 'scale(.5)'
+
+                    setTimeout(() => {
+                        inputWrapper.getElementsByTagName('svg').item(0)
+                            .style.opacity = 1
+
+                        inputWrapper.getElementsByTagName('svg').item(0)
+                            .style.transform = 'scale(1)'
+                    }, 1);
+                }
+            },
+
+            hideClearButton: function () {
+                if (self.multiCheckboxSelectObj.props.multiple) {
+
+                    inputWrapper.getElementsByTagName('svg').item(0)
+                        .style.display = 'none'
+                }
+            },
+
+            clearSelection: function () {
+                self.multiCheckboxSelectObj.selectAllBlock.getElementsByTagName('button').item(0).dispatchEvent(new Event('click'))
+
+                if (self.multiCheckboxSelectObj.checkedItems !== 0) {
+                    self.multiCheckboxSelectObj.clearSelection()
+                } else {
+                    self.onClear()
                 }
 
             },
 
             selectAll: function (thisButton) {
                 inputField.value = ""
-                
+
                 let boolean = thisButton.getAttribute('checked') === 'true'
 
                 Array.from(self.options).forEach(e => {
@@ -279,9 +318,11 @@ function multiCheckboxSelect(element, properties) {
                 if (self.multiCheckboxSelectObj.checkedItems > 0) {
                     inputField.placeholder =
                         `Selected ${self.multiCheckboxSelectObj.checkedItems} ${self.multiCheckboxSelectObj.props.entryName}(s)`
+                    self.multiCheckboxSelectObj.showClearButton()
                 } else {
                     inputField.placeholder = self.multiCheckboxSelectObj.props
                         .placeholder
+                    self.multiCheckboxSelectObj.hideClearButton()
                 }
 
                 self.multiCheckboxSelectObj.initializeItems(thisProps.data, false)
@@ -324,8 +365,10 @@ function multiCheckboxSelect(element, properties) {
                 }
 
             }
-            
+
         }
+
+        self.onClear = function () { }
 
         let thisProps = self.multiCheckboxSelectObj.props
 
@@ -362,10 +405,29 @@ function multiCheckboxSelect(element, properties) {
                                      transform="translate(0 0)" fill="inherit" />
                              </svg>`
 
-
+        let clearIconTemplate = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26.6px"
+                                    height="26.6px" viewBox="0 0 26.6 26.6" style="display: none; overflow:visible;enable-background:new 0 0 26.6 26.6;" xml:space="preserve" class="clear">
+                                    <style type="text/css">
+                                        .st0{fill:none;stroke:inherit;stroke-width:2;stroke-miterlimit:10;}
+                                        .st1{fill:none;stroke:inherit;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+                                    </style>
+                                    <defs>
+                                    </defs>
+                                    <g>
+                                        <circle class="st0" cx="13.3" cy="13.3" r="12.3"/>
+                                        <line class="st1" x1="7.4" y1="7.4" x2="19.2" y2="19.2"/>
+                                        <line class="st1" x1="19.2" y1="7.4" x2="7.4" y2="19.2"/>
+                                    </g>
+                                </svg>`
+        inputWrapper.innerHTML += clearIconTemplate
         inputWrapper.innerHTML += iconTemplate
-        inputWrapper.getElementsByTagName('svg').item(0).onclick = self
-            .multiCheckboxSelectObj.closeDropdown
+
+        inputWrapper.getElementsByTagName('svg').item(0).addEventListener('click', e => {
+            self.multiCheckboxSelectObj.clearSelection()
+            e.stopPropagation()
+        })
+
+        inputWrapper.getElementsByTagName('svg').item(1).onclick = self.multiCheckboxSelectObj.closeDropdown
         inputWrapper.prepend(inputField)
         wrapper.prepend(inputWrapper)
 
@@ -397,7 +459,7 @@ function multiCheckboxSelect(element, properties) {
             //generate select all
             let selectAll = document.createElement('div')
             selectAll.classList.add('select-all')
-            thisProps.selectAll = selectAll
+            self.multiCheckboxSelectObj.selectAllBlock = selectAll
             let p = document.createElement('p')
             p.textContent = 'Select All'
 
