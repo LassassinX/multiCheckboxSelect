@@ -1,5 +1,5 @@
 /* @@Author: Sanjid Islam Chowdhury
-MultiCheckboxSelect css@v1.0.3 */
+MultiCheckboxSelect css@v1.0.4 */
 
 /* button  */
 .dropdown-wrapper div button {
@@ -62,6 +62,7 @@ MultiCheckboxSelect css@v1.0.3 */
     align-items: center;
     justify-content: space-between;
     background-color: white;
+    padding-left: 0 !important;
 }
 
 .multi-checkbox-select-wrapper .input-wrapper input {
@@ -69,6 +70,7 @@ MultiCheckboxSelect css@v1.0.3 */
     font-size: 14px;
     flex-grow: 1;
     width: 100%;
+    caret-color: #46d2c4;
 }
 
 .multi-checkbox-select-wrapper .input-wrapper svg {
@@ -93,6 +95,15 @@ MultiCheckboxSelect css@v1.0.3 */
     transform: scale(.5);
 }
 
+.multi-checkbox-select-wrapper .input-wrapper svg.search {
+    padding: 0;
+    margin: 0;
+    fill: #46D2C4;
+    width: 18px;
+    margin-left: 9px;
+    margin-right: 3px;
+}
+
 
 .multi-checkbox-select-wrapper .dropdown-wrapper {
     position: absolute;
@@ -105,7 +116,7 @@ MultiCheckboxSelect css@v1.0.3 */
     height: 0px;
     opacity: 0;
     transition: all 0.2s;
-    z-index: 999;
+    z-index: 996;
 }
 
 .multi-checkbox-select-wrapper .dropdown {
@@ -161,10 +172,4 @@ MultiCheckboxSelect css@v1.0.3 */
 
 .select-all p {
     font-size: 15px;
-}
-
-/* clear button  */
-
-.clear-button { 
-    
 }
