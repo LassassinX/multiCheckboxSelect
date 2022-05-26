@@ -1,5 +1,5 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v2.0.1
+// MultiCheckboxSelect js@v2.0.2
 
 try {
     jQuery.fn.extend({
@@ -218,13 +218,17 @@ function multiCheckboxSelect(element, properties) {
             },
 
             fireChange: function () {
-                console.log('firing')
                 if (self.multiCheckboxSelectObj.props.multiple) {
                     inputWrapper.querySelector('input').value = ""
                     inputWrapper.querySelector('input').dispatchEvent(new Event('input'))
                 }
-                let changeEvent = new Event('change');
-                self.dispatchEvent(changeEvent);
+
+                const changeEvent = new CustomEvent('change', {
+                    bubbles: true,
+                    detail: { self }
+                })
+
+                self.dispatchEvent(changeEvent)
             },
 
             closeAble: function () {
