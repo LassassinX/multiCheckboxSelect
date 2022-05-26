@@ -1,8 +1,8 @@
 /* @@Author: Sanjid Islam Chowdhury
-MultiCheckboxSelect css@v1.0.4 */
+MultiCheckboxSelect css@v1.0.5 */
 
 /* button  */
-.dropdown-wrapper div button {
+.multiselect-dropdown-wrapper div button {
     width: 15px;
     height: 15px;
     background-color: transparent;
@@ -14,11 +14,11 @@ MultiCheckboxSelect css@v1.0.4 */
     transition: all 0.2s;
 }
 
-.dropdown-wrapper div button:hover {
+.multiselect-dropdown-wrapper div button:hover {
     cursor: pointer;
 }
 
-.dropdown-wrapper div button svg {
+.multiselect-dropdown-wrapper div button svg {
     opacity: 0;
     position: absolute;
     top: -3px;
@@ -29,7 +29,7 @@ MultiCheckboxSelect css@v1.0.4 */
     transition: all 0.2s;
 }
 
-.dropdown-wrapper div button[checked="true"]::after {
+.multiselect-dropdown-wrapper div button[checked="true"]::after {
     content: "";
     position: absolute;
     right: 0;
@@ -43,7 +43,7 @@ MultiCheckboxSelect css@v1.0.4 */
     transition: all 0.2s;
 }
 
-.dropdown-wrapper div button[checked="true"] svg {
+.multiselect-dropdown-wrapper div button[checked="true"] svg {
     opacity: 1;
 }
 
@@ -105,9 +105,9 @@ MultiCheckboxSelect css@v1.0.4 */
 }
 
 
-.multi-checkbox-select-wrapper .dropdown-wrapper {
+.multiselect-dropdown-wrapper {
     position: absolute;
-    min-width: 100%;
+    min-width: min-content; 
     background: white;
     border: solid 2px #CCCFD2;
     border-radius: 10px;
@@ -115,17 +115,18 @@ MultiCheckboxSelect css@v1.0.4 */
     padding: 10px 10px;
     height: 0px;
     opacity: 0;
-    transition: all 0.2s;
-    z-index: 996;
+    transition: opacity 0.2s;
+    z-index: 1006;
+    top: 0;
 }
 
-.multi-checkbox-select-wrapper .dropdown {
+.multiselect-dropdown-wrapper .dropdown {
     max-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.multi-checkbox-select-wrapper .dropdown>div {
+.multiselect-dropdown-wrapper .dropdown>div {
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -133,13 +134,13 @@ MultiCheckboxSelect css@v1.0.4 */
     gap: 20px;
 }
 
-.multi-checkbox-select-wrapper .dropdown>div:hover { 
+.multiselect-dropdown-wrapper .dropdown>div:hover { 
     cursor: pointer;
     background-color: #00ffe517;
     border-radius: 5px;
 }
 
-.multi-checkbox-select-wrapper .dropdown:not([data-multiple])>div:hover {
+.multiselect-dropdown-wrapper .dropdown:not([data-multiple])>div:hover {
     background-color: #46d2c4;
     color: white;
 }
@@ -153,11 +154,11 @@ MultiCheckboxSelect css@v1.0.4 */
 } */
 
 
-.multi-checkbox-select-wrapper .dropdown>* p {
+.multiselect-dropdown-wrapper .dropdown>* p {
     font-size: 14px;
 }
 
-.multi-checkbox-select-wrapper .dropdown>p.no-result {
+.multiselect-dropdown-wrapper .dropdown>p.no-result {
     font-size: 14px;
     display: block;
     text-align: center;
