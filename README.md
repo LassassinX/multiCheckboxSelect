@@ -63,6 +63,8 @@ options ={
 }
 ```
 
+You can also set children (other instances of ```multiCheckboxSelect```) that will clear if the parent element is cleared, either by pressing the x on the input field or by calling the ```clear()``` method in jQuery
+
 ### HTML
 
 ```HTML
@@ -81,13 +83,16 @@ options ={
  </select>
 ```
 
+If a placeholder attr is given as ```data-placeholder="my placeholder"```, it will override the placeholder placed during initialization of the ```multiCheckboxSelect``` instance
+
 ## Methods
 
 |Returns|Method|Parameter|Description| 
 |--------|-------------|----------|---------------------------------------------------------------------------------------------|
 | void|appendData(data)|Array|Appends data to the current multi checkbox select instance.|
 | void|initializeData(data)|Array| Removes all current data from the multiselect object and initializes with the passed dataset.|
-
+| void|addChild(multicheckboxSelectInstance)|multiCheckboxSelect| Adds a child to this multicheckboxselect instance. Fires a new 'clear' event|
+| void|clear()| void | Clears all the selections of the ```multiCheckboxSelect``` instance|
 
 ## Options
 - `placeholder: 'Select country'` - Placeholder of the input field
