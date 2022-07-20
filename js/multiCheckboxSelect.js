@@ -1,5 +1,6 @@
 // @@Author: Sanjid Islam Chowdhury
-// MultiCheckboxSelect js@v2.0.2
+
+// MultiCheckboxSelect js@v2.0.8
 
 try {
     jQuery.fn.extend({
@@ -45,6 +46,21 @@ try {
             return this.each(() => {
                 self.clearAll()
             })
+        },
+
+        setPlaceholder: function (placeholder) {
+            let self = this[0]
+
+            return this.each(() => {
+                self.setPlaceholder(placeholder)
+            })
+        },
+        destroy: function() { 
+            let self = this[0]
+            
+            return this.each(()=> {
+                self.destory()
+            })
         }
     })
 } catch (error) {
@@ -74,11 +90,12 @@ function multiCheckboxSelect(element, properties) {
         data: (properties !== undefined && properties.data !== undefined) ? properties.data : [],
         multiple: (properties !== undefined && properties.multiple !== undefined) ? properties.multiple : false || self.getAttribute('multiple') !== null,
         entryName: (properties !== undefined && properties.entryName !== undefined) ? properties.entryName : 'Entrie',
+        value: (properties !== undefined && properties.value !== undefined) ? properties.value : '',
     }
 
     if (!self.multiCheckboxSelectObj) {
         self.value = ""
-
+        
         self.initializeData = (data) => {
             for (i = self.options.length - 1; i >= 0; i--) {
                 self.remove(i);
@@ -117,6 +134,23 @@ function multiCheckboxSelect(element, properties) {
             inputWrapper.querySelector('svg.clear').dispatchEvent(new Event('click'))
         }
 
+        self.setPlaceholder = (placeholder) => {
+            self.multiCheckboxSelectObj.props.placeholder = placeholder
+            self.multiCheckboxSelectObj.inputWrapper.querySelector('input').placeholder = placeholder
+
+        }
+
+        self.destory = () => {
+            self.multiCheckboxSelectObj.closeDropdown()
+
+            delete self.multiCheckboxSelectObj
+            delete self.initializeData
+            delete self.appendData
+            delete self.addChild
+            delete self.clearAll
+            delete self.setPlaceholder
+        }
+
         self.multiCheckboxSelectObj = {
             props: this.properties,
             isMouseInsideInput: false,
@@ -133,8 +167,8 @@ function multiCheckboxSelect(element, properties) {
 
             positionDropdown: () => {
                 let rect = self.multiCheckboxSelectObj.inputWrapper.getBoundingClientRect();
-                self.multiCheckboxSelectObj.dropdownWrapper.style.top = Number(rect.top + rect.height) + 'px'
-                self.multiCheckboxSelectObj.dropdownWrapper.style.left = rect.left + 'px'
+                self.multiCheckboxSelectObj.dropdownWrapper.style.top = Number(rect.top + rect.height + window.scrollY) + 'px'
+                self.multiCheckboxSelectObj.dropdownWrapper.style.left = Number(rect.left + window.scrollX) + 'px'
                 self.multiCheckboxSelectObj.dropdownWrapper.style.width = rect.width + 'px'
             },
 
@@ -153,7 +187,7 @@ function multiCheckboxSelect(element, properties) {
                                 self.multiCheckboxSelectObj.prevOptions.push(e.value)
                             }
                         })
-                    } else { 
+                    } else {
                         self.multiCheckboxSelectObj.prevOptions.push(self.value)
                     }
 
@@ -166,10 +200,9 @@ function multiCheckboxSelect(element, properties) {
                             .style.transform = 'rotate(180deg)'
                         self.multiCheckboxSelectObj.isOpen = true
 
+                        if (self.multiCheckboxSelectObj.dropdownHeight < dropdown.offsetHeight)
+                            self.multiCheckboxSelectObj.dropdownHeight = dropdown.offsetHeight
                     }, 1)
-
-                    if (self.multiCheckboxSelectObj.dropdownHeight < dropdown.offsetHeight)
-                        self.multiCheckboxSelectObj.dropdownHeight = dropdown.offsetHeight
 
                     inputWrapper.querySelector('input').focus()
                     inputWrapper.querySelector('input').select()
@@ -695,11 +728,6 @@ function multiCheckboxSelect(element, properties) {
 
         }
 
-        //for single
-        if (!thisProps.multiple) {
-
-        }
-
         self.multiCheckboxSelectObj.initializeItems(thisProps.data)
 
         //Important Functions
@@ -727,6 +755,13 @@ function multiCheckboxSelect(element, properties) {
         inputWrapper.querySelector('input').addEventListener('input', self.multiCheckboxSelectObj.search.bind(
             null, inputWrapper.querySelector('input')))
 
+        //for single
+        if (!thisProps.multiple) {
+            if (thisProps.value) {
+                inputWrapper.querySelector('input').value = thisProps.value
+                self.value = thisProps.value
+            }
+        }
 
     } else {
         throw "Multi Checkbox Select already initialized once"
