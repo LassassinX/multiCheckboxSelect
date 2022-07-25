@@ -1,6 +1,6 @@
 // @@Author: Sanjid Islam Chowdhury
 
-// MultiCheckboxSelect js@v2.0.8
+// MultiCheckboxSelect js@v2.1.0
 
 try {
     jQuery.fn.extend({
@@ -17,9 +17,10 @@ try {
         initializeData: function (data) {
 
             let self = this[0]
+            let dataCopy = JSON.parse(JSON.stringify(data))
 
             return this.each(() => {
-                self.initializeData(data)
+                self.initializeData(dataCopy)
             })
 
         },
@@ -27,8 +28,10 @@ try {
         appendData: function (data) {
             let self = this[0]
 
+            let dataCopy = JSON.parse(JSON.stringify(data))
+
             return this.each(() => {
-                self.appendData(data)
+                self.appendData(dataCopy)
             })
         },
 
@@ -55,10 +58,10 @@ try {
                 self.setPlaceholder(placeholder)
             })
         },
-        destroy: function() { 
+        destroy: function () {
             let self = this[0]
-            
-            return this.each(()=> {
+
+            return this.each(() => {
                 self.destory()
             })
         }
@@ -95,7 +98,7 @@ function multiCheckboxSelect(element, properties) {
 
     if (!self.multiCheckboxSelectObj) {
         self.value = ""
-        
+
         self.initializeData = (data) => {
             for (i = self.options.length - 1; i >= 0; i--) {
                 self.remove(i);
@@ -131,7 +134,14 @@ function multiCheckboxSelect(element, properties) {
         }
 
         self.clearAll = () => {
-            inputWrapper.querySelector('svg.clear').dispatchEvent(new Event('click'))
+            if (self.multiCheckboxSelectObj.props.multiple)
+                inputWrapper.querySelector('svg.clear').dispatchEvent(new Event('click'))
+            else{
+                inputWrapper.querySelector('input').value = '' 
+                self.value = ""
+                self.dispatchEvent(new Event('change'))
+                inputWrapper.querySelector('input').dispatchEvent(new Event('input'))
+            }
         }
 
         self.setPlaceholder = (placeholder) => {
@@ -762,6 +772,9 @@ function multiCheckboxSelect(element, properties) {
                 self.value = thisProps.value
             }
         }
+
+        self.value = ""
+        self.dispatchEvent(new Event('change'))
 
     } else {
         throw "Multi Checkbox Select already initialized once"
