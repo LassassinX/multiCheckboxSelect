@@ -1,5 +1,5 @@
 /* @@Author: Sanjid Islam Chowdhury
-MultiCheckboxSelect css@v1.0.5 */
+MultiCheckboxSelect css@v1.0.6 */
 
 /* button  */
 .multiselect-dropdown-wrapper div button {
@@ -67,7 +67,7 @@ MultiCheckboxSelect css@v1.0.5 */
 
 .multi-checkbox-select-wrapper .input-wrapper input {
     all: initial;
-    font-size: 14px;
+    font-size: 12px;
     flex-grow: 1;
     width: 100%;
     caret-color: #46d2c4;
